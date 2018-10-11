@@ -1,11 +1,12 @@
 package ru.s4nchez.hackernews.ui.list
 
+import android.annotation.SuppressLint
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import ru.s4nchez.hackernews.data.entities.Item
 import ru.s4nchez.hackernews.interactors.NewsInteractor
 import javax.inject.Inject
 
@@ -14,19 +15,39 @@ class ListPresenter @Inject constructor(
         private val interactor: NewsInteractor
 ) : MvpPresenter<ContractView>(), ContractPresenter {
 
-    private val ids = ArrayList<Long>()
+    private val ids = ArrayList<Int>()
+    private val news = ArrayList<Item>()
+    private var isLoading = false
 
     init {
-        loadIds()
+        if (!isLoading && ids.isEmpty()) loadIds()
     }
 
-    fun loadIds() {
-        interactor.getNewStories().enqueue(object : Callback<List<Long>> {
-            override fun onFailure(call: Call<List<Long>>, t: Throwable) {}
+    @SuppressLint("CheckResult")
+    fun loadNew(id: Int) {
+        interactor.getItem(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                            news.add(it)
+                            viewState.initAdapter(news)
+                        }, {
+                            Log.e("", it.message)
+                        }
+                )
+    }
 
-            override fun onResponse(call: Call<List<Long>>, response: Response<List<Long>>) {
-                Log.d("", "")
-            }
-        })
+    @SuppressLint("CheckResult")
+    fun loadIds() {
+        interactor.getNewStories()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                            ids.addAll(it)
+                            loadNew(it[0])
+                        }, {
+                            Log.e("", it.message)
+                        }
+                )
     }
 }

@@ -1,7 +1,9 @@
 package ru.s4nchez.hackernews.interactors
 
-import retrofit2.Call
+import io.reactivex.Single
+import ru.s4nchez.hackernews.data.entities.Item
 
 interface NewsInteractor {
-    fun getNewStories(): Call<List<Long>>
+    fun getNewStories(): Single<List<Int>>
+    fun getItem(id: Int): Single<Item>
 }

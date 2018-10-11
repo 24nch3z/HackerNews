@@ -4,6 +4,7 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.s4nchez.hackernews.data.datasource.APIInterface
 import ru.s4nchez.hackernews.data.repositories.NewsRepository
@@ -24,9 +25,10 @@ class AppModule(private val context: Context) {
 
     @Provides
     @Singleton
-    fun provideRetrofitClient(context: Context): Retrofit {
+    fun provideRetrofitClient(): Retrofit {
         return Retrofit.Builder()
                 .baseUrl(BASE_URL)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
     }
