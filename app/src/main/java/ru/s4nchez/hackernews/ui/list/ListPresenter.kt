@@ -29,12 +29,11 @@ class ListPresenter @Inject constructor(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                            news.add(it)
-                            viewState.initAdapter(news)
-                        }, {
-                            Log.e("", it.message)
-                        }
-                )
+                    news.add(it)
+                    viewState.initAdapter(news)
+                }, {
+                    Log.e("", it.message)
+                })
     }
 
     @SuppressLint("CheckResult")
@@ -43,11 +42,10 @@ class ListPresenter @Inject constructor(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                            ids.addAll(it)
-                            loadNew(it[0])
-                        }, {
-                            Log.e("", it.message)
-                        }
-                )
+                    ids.addAll(it)
+                    loadNew(it[0])
+                }, {
+                    Log.e("", it.message)
+                })
     }
 }

@@ -18,7 +18,7 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(item: Item) {
         with(itemView) {
             score.text = itemView.context.getString(R.string.score, item.score)
-            time.text = dateFormat.format((item.time?.times(1000)))
+            time.text = dateFormat.format((item.time))
             title.text = item.title
         }
     }

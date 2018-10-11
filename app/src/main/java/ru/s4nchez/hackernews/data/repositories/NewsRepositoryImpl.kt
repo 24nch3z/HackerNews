@@ -8,5 +8,10 @@ class NewsRepositoryImpl(var apiInterface: APIInterface) : NewsRepository {
 
     override fun getNewStories(): Single<List<Int>> = apiInterface.getNewStories()
 
-    override fun getItem(id: Int): Single<Item> = apiInterface.getItem(id)
+    override fun getItem(id: Int): Single<Item> =
+            apiInterface.getItem(id)
+                    .flatMap {
+                        if (it.time != null) it.time = it.time!! * 1000
+                        Single.just(it)
+                    }
 }

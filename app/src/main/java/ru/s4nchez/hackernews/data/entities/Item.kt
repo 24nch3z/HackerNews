@@ -8,7 +8,7 @@ data class Item(
         @SerializedName("descendants") val descendants: Int?,
         @SerializedName("kids") val kids: List<Int>?,
         @SerializedName("score") val score: Int?,
-        @SerializedName("time") val time: Long?,
+        @SerializedName("time") var time: Long?,
         @SerializedName("title") val title: String?,
         @SerializedName("type") val type: String?,
         @SerializedName("url") val url: String

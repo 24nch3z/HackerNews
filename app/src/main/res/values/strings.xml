@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Hacker News</string>
-    <string name="empty_list">Список пуст</string>
-    <string name="score">Счет: %1$d</string>
+    <string name="empty_list">Empty list</string>
+    <string name="score">Score: %1$d</string>
 </resources>
