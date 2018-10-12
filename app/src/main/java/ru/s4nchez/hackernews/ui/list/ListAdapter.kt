@@ -6,7 +6,9 @@ class ListAdapter(items: ArrayList<Any>) : ListDelegationAdapter<ArrayList<Any>>
 
     init {
         this.items = items
-        delegatesManager.addDelegate(ItemAdapterDelegate())
+        delegatesManager
+                .addDelegate(ItemAdapterDelegate())
+                .addDelegate(ProgressBarAdapterDelegate())
     }
 
     fun updateItems() {

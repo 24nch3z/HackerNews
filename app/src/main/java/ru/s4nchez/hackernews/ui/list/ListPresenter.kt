@@ -17,7 +17,8 @@ class ListPresenter @Inject constructor(
         private val interactor: NewsInteractor
 ) : MvpPresenter<ContractView>(), ContractPresenter {
 
-    private val PAGE_SIZE = 20
+    private val PROGRESSBAR_ITEM_TAG = "PROGRESSBAR_ITEM_TAG"
+    private val PAGE_SIZE = 10
     private val ids = ArrayList<Int>()
     private val items = ArrayList<Any>()
     private var isLoading = false
@@ -36,16 +37,6 @@ class ListPresenter @Inject constructor(
                 .subscribe({
                     ids.addAll(it)
                     loadNextPage()
-
-                    interactor.getItems(arrayOf(it[0]))
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe({
-                                Timber.d("")
-                            }, {
-                                Timber.d("")
-                            })
-
                 }, {
                     Timber.e(it)
                     isLoading = false
@@ -55,11 +46,23 @@ class ListPresenter @Inject constructor(
                 })
     }
 
+    private fun setProgressBarItem() {
+        if (!items.isEmpty()) {
+            items.add(PROGRESSBAR_ITEM_TAG)
+            viewState.updateItems()
+        }
+    }
+
+    private fun removeProgressBarItem() {
+        items.remove(PROGRESSBAR_ITEM_TAG)
+        viewState.updateItems()
+    }
+
     @SuppressLint("CheckResult")
     private fun loadItemsByIds(ids: Array<Int>) {
         if (ids.isEmpty()) return
         isLoading = true
-        viewState.showHideProgressBar(true)
+        setProgressBarItem()
 
         interactor.getItems(ids)
                 .subscribeOn(Schedulers.io())
@@ -69,12 +72,14 @@ class ListPresenter @Inject constructor(
                     items.addAll(it)
                     viewState.updateItems()
                     viewState.showHideProgressBar(false)
+                    removeProgressBarItem()
                 }, {
                     Timber.e(it)
                     isLoading = false
                     if (items.isEmpty()) viewState.showHideEmptyListView(true)
                     viewState.showHideProgressBar(false)
                     viewState.showToast(R.string.no_connection)
+                    removeProgressBarItem()
                 })
     }
 

@@ -1,4 +1,4 @@
-package ru.s4nchez.hackernews
+package ru.s4nchez.hackernews.utils
 
 import android.support.annotation.LayoutRes
 import android.view.LayoutInflater

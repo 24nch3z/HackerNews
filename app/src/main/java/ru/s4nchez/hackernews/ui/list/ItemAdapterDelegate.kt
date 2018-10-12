@@ -8,7 +8,7 @@ import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 import kotlinx.android.synthetic.main.item_item.view.*
 import ru.s4nchez.hackernews.R
 import ru.s4nchez.hackernews.data.entities.Item
-import ru.s4nchez.hackernews.inflate
+import ru.s4nchez.hackernews.utils.inflate
 import java.text.SimpleDateFormat
 
 class ItemAdapterDelegate : AdapterDelegate<ArrayList<Any>>() {
