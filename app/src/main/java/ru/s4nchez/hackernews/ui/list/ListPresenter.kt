@@ -3,7 +3,6 @@ package ru.s4nchez.hackernews.ui.list
 import android.annotation.SuppressLint
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -37,7 +36,6 @@ class ListPresenter @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     ids.addAll(it)
-                    viewState.showHideProgressBar(false)
                     loadNextPage()
                 }, {
                     Timber.e(it)
@@ -82,14 +80,11 @@ class ListPresenter @Inject constructor(
     override fun handleOnScrollListener(manager: RecyclerView.LayoutManager?) {
         if (manager == null) return
 
-        val visibleItemCount = manager.childCount
-        val totalItemCount = manager.itemCount
-        val firstVisibleItemPosition = (manager as LinearLayoutManager)
-                .findFirstVisibleItemPosition()
-
-        if (visibleItemCount + firstVisibleItemPosition >= totalItemCount &&
-                firstVisibleItemPosition >= 0 && totalItemCount >= PAGE_SIZE) {
-            loadNextPage()
+        with(manager as LinearLayoutManager) {
+            val firstVisibleItemPos = findFirstVisibleItemPosition()
+            if (childCount + firstVisibleItemPos >= itemCount && firstVisibleItemPos >= 0) {
+                loadNextPage()
+            }
         }
     }
 }
