@@ -5,6 +5,8 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import ru.s4nchez.hackernews.data.entities.Item
 
+val BASE_URL = "https://hacker-news.firebaseio.com/v0/"
+
 interface APIInterface {
 
     @GET("newstories.json")

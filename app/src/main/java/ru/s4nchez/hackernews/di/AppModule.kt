@@ -7,6 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.s4nchez.hackernews.data.datasource.APIInterface
+import ru.s4nchez.hackernews.data.datasource.BASE_URL
 import ru.s4nchez.hackernews.data.repositories.NewsRepository
 import ru.s4nchez.hackernews.data.repositories.NewsRepositoryImpl
 import ru.s4nchez.hackernews.interactors.NewsInteractor
@@ -16,8 +17,6 @@ import javax.inject.Singleton
 
 @Module
 class AppModule(private val context: Context) {
-
-    val BASE_URL = "https://hacker-news.firebaseio.com/v0/"
 
     @Provides
     @Singleton

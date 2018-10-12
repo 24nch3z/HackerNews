@@ -8,9 +8,7 @@ import ru.s4nchez.hackernews.data.entities.Item
 
 class ItemAdapter(val items: ArrayList<Item>) : RecyclerView.Adapter<ItemHolder>() {
 
-    fun updateItems(items: List<Item>) {
-        this.items.clear()
-        this.items.addAll(items)
+    fun updateItems() {
         notifyDataSetChanged()
     }
 

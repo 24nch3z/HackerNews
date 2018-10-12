@@ -8,5 +8,13 @@ class NewsInteractorImpl(var repository: NewsRepository) : NewsInteractor {
 
     override fun getNewStories(): Single<List<Int>> = repository.getNewStories()
 
-    override fun getItem(id: Int): Single<Item> = repository.getItem(id)
+    override fun getItems(ids: Array<Int>): Single<List<Item>> {
+        val requests = ArrayList<Single<Item>>()
+        for (id in ids) requests.add(repository.getItem(id))
+        return Single.zip(requests) { it ->
+            val items = ArrayList<Item>()
+            it.forEach { items.add(it as Item) }
+            items
+        }
+    }
 }

@@ -5,5 +5,5 @@ import ru.s4nchez.hackernews.data.entities.Item
 
 interface NewsInteractor {
     fun getNewStories(): Single<List<Int>>
-    fun getItem(id: Int): Single<Item>
+    fun getItems(ids: Array<Int>): Single<List<Item>>
 }
