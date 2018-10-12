@@ -8,7 +8,6 @@ import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ru.s4nchez.hackernews.R
-import ru.s4nchez.hackernews.data.entities.Item
 import ru.s4nchez.hackernews.interactors.NewsInteractor
 import timber.log.Timber
 import javax.inject.Inject
@@ -20,7 +19,7 @@ class ListPresenter @Inject constructor(
 
     private val PAGE_SIZE = 20
     private val ids = ArrayList<Int>()
-    private val items = ArrayList<Item>()
+    private val items = ArrayList<Any>()
     private var isLoading = false
 
     init {
@@ -37,6 +36,16 @@ class ListPresenter @Inject constructor(
                 .subscribe({
                     ids.addAll(it)
                     loadNextPage()
+
+                    interactor.getItems(arrayOf(it[0]))
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe({
+                                Timber.d("")
+                            }, {
+                                Timber.d("")
+                            })
+
                 }, {
                     Timber.e(it)
                     isLoading = false

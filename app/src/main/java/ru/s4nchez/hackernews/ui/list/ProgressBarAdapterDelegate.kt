@@ -1,0 +1,24 @@
+package ru.s4nchez.hackernews.ui.list
+
+import android.support.v7.widget.RecyclerView
+import android.view.View
+import android.view.ViewGroup
+import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
+import ru.s4nchez.hackernews.R
+import ru.s4nchez.hackernews.inflate
+
+class ProgressBarAdapterDelegate : AdapterDelegate<ArrayList<Any>>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
+            ViewHolder(parent.inflate(R.layout.item_progress_bar))
+
+    override fun isForViewType(items: ArrayList<Any>, position: Int): Boolean {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onBindViewHolder(items: ArrayList<Any>, position: Int, holder: RecyclerView.ViewHolder, payloads: MutableList<Any>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    private inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+}

@@ -11,12 +11,14 @@ import ru.s4nchez.hackernews.App
 import ru.s4nchez.hackernews.R
 import ru.s4nchez.hackernews.data.entities.Item
 import ru.s4nchez.hackernews.ui.common.BaseFragment
+import ru.s4nchez.hackernews.visibilityByFlag
 import javax.inject.Inject
 
 class ListView : BaseFragment(), ContractView {
 
     override val layout = R.layout.fragment_list
-    private var adapter: ItemAdapter? = null
+//    private var adapter: ItemAdapter? = null
+    private var adapter: ListAdapter? = null
 
     companion object {
         fun newInstance() = ListView()
@@ -51,22 +53,19 @@ class ListView : BaseFragment(), ContractView {
         }
     }
 
-    override fun initAdapter(items: ArrayList<Item>) {
-        adapter = ItemAdapter(items)
+    override fun initAdapter(items: ArrayList<Any>) {
+//        adapter = ItemAdapter(items)
+        adapter = ListAdapter(items)
         recycler_view.adapter = adapter
-    }
-
-    override fun showHideProgressBar(flag: Boolean) {
-        progress_bar.visibility = if (flag) View.VISIBLE else View.GONE
-    }
-
-    override fun showHideEmptyListView(flag: Boolean) {
-        empty_list.visibility = if (flag) View.VISIBLE else View.GONE
     }
 
     override fun updateItems() {
         adapter?.updateItems()
     }
+
+    override fun showHideProgressBar(flag: Boolean) = progress_bar.visibilityByFlag(flag)
+
+    override fun showHideEmptyListView(flag: Boolean) = empty_list.visibilityByFlag(flag)
 
     override fun showToast(id: Int) = Toast.makeText(context!!, id, Toast.LENGTH_SHORT).show()
 }

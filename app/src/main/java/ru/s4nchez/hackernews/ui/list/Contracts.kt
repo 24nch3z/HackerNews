@@ -10,7 +10,7 @@ interface ContractPresenter {
 }
 
 interface ContractView : MvpView {
-    fun initAdapter(items: ArrayList<Item>)
+    fun initAdapter(items: ArrayList<Any>)
     fun showHideProgressBar(flag: Boolean)
     fun showHideEmptyListView(flag: Boolean)
     fun updateItems()
