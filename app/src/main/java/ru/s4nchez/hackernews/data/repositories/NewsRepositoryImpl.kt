@@ -8,6 +8,7 @@ class NewsRepositoryImpl(var apiInterface: APIInterface) : NewsRepository {
 
     override fun getNewStories(): Single<List<Int>> = apiInterface.getNewStories()
 
+    // Умножение на 1000 нужно для перевода из секунд в миллисекунды
     override fun getItem(id: Int): Single<Item> =
             apiInterface.getItem(id)
                     .flatMap {

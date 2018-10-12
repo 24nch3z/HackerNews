@@ -8,6 +8,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import ru.s4nchez.hackernews.R
 import ru.s4nchez.hackernews.data.entities.Item
 import ru.s4nchez.hackernews.interactors.NewsInteractor
 import javax.inject.Inject
@@ -35,18 +36,23 @@ class ListPresenter @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     ids.addAll(it)
+                    viewState.showHideProgressBar(false)
                     loadNextPage()
                 }, {
                     Log.e("", it.message)
                     isLoading = false
                     viewState.showHideEmptyListView(true)
                     viewState.showHideProgressBar(false)
+                    viewState.showToast(R.string.no_connection)
                 })
     }
 
     @SuppressLint("CheckResult")
     private fun loadItemsByIds(ids: Array<Int>) {
+        if (ids.isEmpty()) return
         isLoading = true
+        viewState.showHideProgressBar(true)
+
         interactor.getItems(ids)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -58,7 +64,9 @@ class ListPresenter @Inject constructor(
                 }, {
                     Log.e("", it.message)
                     isLoading = false
+                    if (items.isEmpty()) viewState.showHideEmptyListView(true)
                     viewState.showHideProgressBar(false)
+                    viewState.showToast(R.string.no_connection)
                 })
     }
 

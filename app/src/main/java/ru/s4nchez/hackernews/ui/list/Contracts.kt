@@ -1,5 +1,6 @@
 package ru.s4nchez.hackernews.ui.list
 
+import android.support.annotation.StringRes
 import android.support.v7.widget.RecyclerView
 import com.arellomobile.mvp.MvpView
 import ru.s4nchez.hackernews.data.entities.Item
@@ -13,4 +14,5 @@ interface ContractView : MvpView {
     fun showHideProgressBar(flag: Boolean)
     fun showHideEmptyListView(flag: Boolean)
     fun updateItems()
+    fun showToast(@StringRes id: Int)
 }

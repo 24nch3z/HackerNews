@@ -3,6 +3,7 @@ package ru.s4nchez.hackernews.ui.list
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.Toast
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import kotlinx.android.synthetic.main.fragment_list.*
@@ -64,4 +65,6 @@ class ListView : BaseFragment(), ContractView {
     override fun updateItems() {
         adapter?.updateItems()
     }
+
+    override fun showToast(id: Int) = Toast.makeText(context!!, id, Toast.LENGTH_SHORT).show()
 }
