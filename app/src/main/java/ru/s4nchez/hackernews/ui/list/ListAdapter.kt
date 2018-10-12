@@ -2,16 +2,18 @@ package ru.s4nchez.hackernews.ui.list
 
 import com.hannesdorfmann.adapterdelegates3.ListDelegationAdapter
 
-class ListAdapter(items: ArrayList<Any>) : ListDelegationAdapter<ArrayList<Any>>() {
+class ListAdapter : ListDelegationAdapter<ArrayList<Any>>() {
 
     init {
-        this.items = items
+        items = ArrayList()
         delegatesManager
                 .addDelegate(ItemAdapterDelegate())
                 .addDelegate(ProgressBarAdapterDelegate())
     }
 
-    fun updateItems() {
+    fun updateItems(newItems: ArrayList<Any>) {
+        items.clear()
+        items.addAll(newItems)
         notifyDataSetChanged()
     }
 }

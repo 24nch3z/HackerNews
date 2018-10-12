@@ -49,13 +49,13 @@ class ListPresenter @Inject constructor(
     private fun setProgressBarItem() {
         if (!items.isEmpty()) {
             items.add(PROGRESSBAR_ITEM_TAG)
-            viewState.updateItems()
+            viewState.updateItems(items)
         }
     }
 
     private fun removeProgressBarItem() {
         items.remove(PROGRESSBAR_ITEM_TAG)
-        viewState.updateItems()
+        viewState.updateItems(items)
     }
 
     @SuppressLint("CheckResult")
@@ -70,7 +70,7 @@ class ListPresenter @Inject constructor(
                 .subscribe({
                     isLoading = false
                     items.addAll(it)
-                    viewState.updateItems()
+                    viewState.updateItems(items)
                     viewState.showHideProgressBar(false)
                     removeProgressBarItem()
                 }, {

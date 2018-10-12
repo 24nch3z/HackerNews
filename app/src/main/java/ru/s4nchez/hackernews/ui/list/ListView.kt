@@ -52,12 +52,12 @@ class ListView : BaseFragment(), ContractView {
     }
 
     override fun initAdapter(items: ArrayList<Any>) {
-        adapter = ListAdapter(items)
+        adapter = ListAdapter()
         recycler_view.adapter = adapter
     }
 
-    override fun updateItems() {
-        adapter?.updateItems()
+    override fun updateItems(items: ArrayList<Any>) {
+        adapter?.updateItems(items)
     }
 
     override fun showHideProgressBar(flag: Boolean) = progress_bar.visibilityByFlag(flag)

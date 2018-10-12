@@ -4,8 +4,8 @@ import android.app.Application
 import ru.s4nchez.hackernews.di.AppComponent
 import ru.s4nchez.hackernews.di.AppModule
 import ru.s4nchez.hackernews.di.DaggerAppComponent
-import timber.log.Timber.DebugTree
 import timber.log.Timber
+import timber.log.Timber.DebugTree
 
 class App : Application() {
 
