@@ -9,11 +9,13 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import kotlinx.android.synthetic.main.fragment_list.*
 import ru.s4nchez.hackernews.App
 import ru.s4nchez.hackernews.R
+import ru.s4nchez.hackernews.data.entities.Item
 import ru.s4nchez.hackernews.ui.common.BaseFragment
+import ru.s4nchez.hackernews.utils.openUrl
 import ru.s4nchez.hackernews.utils.visibilityByFlag
 import javax.inject.Inject
 
-class ListView : BaseFragment(), ContractView {
+class ListView : BaseFragment(), ContractView, ListAdapter.OnItemClickListener {
 
     override val layout = R.layout.fragment_list
     private var adapter: ListAdapter? = null
@@ -52,7 +54,7 @@ class ListView : BaseFragment(), ContractView {
     }
 
     override fun initAdapter(items: ArrayList<Any>) {
-        adapter = ListAdapter()
+        adapter = ListAdapter(this)
         recycler_view.adapter = adapter
     }
 
@@ -65,4 +67,9 @@ class ListView : BaseFragment(), ContractView {
     override fun showHideEmptyListView(flag: Boolean) = empty_list.visibilityByFlag(flag)
 
     override fun showToast(id: Int) = Toast.makeText(context!!, id, Toast.LENGTH_SHORT).show()
+
+    override fun onItemClick(item: Item) {
+        if (item.url == null) showToast(R.string.no_link)
+        else openUrl(item.url)
+    }
 }

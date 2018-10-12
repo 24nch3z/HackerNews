@@ -8,7 +8,9 @@
     android:layout_marginLeft="@dimen/normal_size"
     android:layout_marginRight="@dimen/normal_size"
     app:contentPadding="@dimen/normal_size"
-    app:cardBackgroundColor="@color/item_background">
+    app:cardBackgroundColor="@color/item_background"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

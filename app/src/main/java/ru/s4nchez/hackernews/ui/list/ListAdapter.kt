@@ -1,13 +1,16 @@
 package ru.s4nchez.hackernews.ui.list
 
 import com.hannesdorfmann.adapterdelegates3.ListDelegationAdapter
+import ru.s4nchez.hackernews.data.entities.Item
 
-class ListAdapter : ListDelegationAdapter<ArrayList<Any>>() {
+class ListAdapter(
+        val listener: OnItemClickListener
+) : ListDelegationAdapter<ArrayList<Any>>() {
 
     init {
         items = ArrayList()
         delegatesManager
-                .addDelegate(ItemAdapterDelegate())
+                .addDelegate(ItemAdapterDelegate(listener))
                 .addDelegate(ProgressBarAdapterDelegate())
     }
 
@@ -15,5 +18,9 @@ class ListAdapter : ListDelegationAdapter<ArrayList<Any>>() {
         items.clear()
         items.addAll(newItems)
         notifyDataSetChanged()
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(item: Item)
     }
 }

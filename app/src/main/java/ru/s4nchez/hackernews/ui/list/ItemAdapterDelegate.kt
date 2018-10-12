@@ -11,7 +11,9 @@ import ru.s4nchez.hackernews.data.entities.Item
 import ru.s4nchez.hackernews.utils.inflate
 import java.text.SimpleDateFormat
 
-class ItemAdapterDelegate : AdapterDelegate<ArrayList<Any>>() {
+class ItemAdapterDelegate(
+        val listener: ListAdapter.OnItemClickListener
+) : AdapterDelegate<ArrayList<Any>>() {
 
     companion object {
         @SuppressLint("SimpleDateFormat")
@@ -19,7 +21,7 @@ class ItemAdapterDelegate : AdapterDelegate<ArrayList<Any>>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder =
-            ViewHolder(parent.inflate(R.layout.item_item))
+            ViewHolder(parent.inflate(R.layout.item_item), listener)
 
     override fun isForViewType(items: ArrayList<Any>, pos: Int): Boolean = items[pos] is Item
 
@@ -27,13 +29,17 @@ class ItemAdapterDelegate : AdapterDelegate<ArrayList<Any>>() {
         (holder as ViewHolder).bind(items[pos] as Item)
     }
 
-    private inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    private inner class ViewHolder(
+            itemView: View,
+            val listener: ListAdapter.OnItemClickListener
+    ) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: Item) {
             with(itemView) {
                 score.text = itemView.context.getString(R.string.score, item.score)
                 time.text = dateFormat.format((item.time))
                 title.text = item.title
+                setOnClickListener { listener.onItemClick(item) }
             }
         }
     }

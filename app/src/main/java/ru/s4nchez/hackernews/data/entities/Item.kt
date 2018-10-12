@@ -11,5 +11,5 @@ data class Item(
         @SerializedName("time") var time: Long?,
         @SerializedName("title") val title: String?,
         @SerializedName("type") val type: String?,
-        @SerializedName("url") val url: String
+        @SerializedName("url") val url: String?
 )
