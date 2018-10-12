@@ -44,9 +44,11 @@ class ListView : BaseFragment(), ContractView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recycler_view.addOnScrollListener(recyclerViewOnScrollListener)
-        recycler_view.addItemDecoration(ItemDecoration(resources
-                .getDimension(R.dimen.recycler_view_spacing).toInt()))
+        with(recycler_view) {
+            addOnScrollListener(recyclerViewOnScrollListener)
+            addItemDecoration(ItemDecoration(resources
+                    .getDimension(R.dimen.recycler_view_spacing).toInt()))
+        }
     }
 
     override fun initAdapter(items: ArrayList<Item>) {

@@ -11,6 +11,7 @@ import io.reactivex.schedulers.Schedulers
 import ru.s4nchez.hackernews.R
 import ru.s4nchez.hackernews.data.entities.Item
 import ru.s4nchez.hackernews.interactors.NewsInteractor
+import timber.log.Timber
 import javax.inject.Inject
 
 @InjectViewState
@@ -39,7 +40,7 @@ class ListPresenter @Inject constructor(
                     viewState.showHideProgressBar(false)
                     loadNextPage()
                 }, {
-                    Log.e("", it.message)
+                    Timber.e(it)
                     isLoading = false
                     viewState.showHideEmptyListView(true)
                     viewState.showHideProgressBar(false)
@@ -62,7 +63,7 @@ class ListPresenter @Inject constructor(
                     viewState.updateItems()
                     viewState.showHideProgressBar(false)
                 }, {
-                    Log.e("", it.message)
+                    Timber.e(it)
                     isLoading = false
                     if (items.isEmpty()) viewState.showHideEmptyListView(true)
                     viewState.showHideProgressBar(false)
