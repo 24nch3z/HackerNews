@@ -4,6 +4,7 @@ import android.app.Application
 import ru.s4nchez.hackernews.di.AppComponent
 import ru.s4nchez.hackernews.di.AppModule
 import ru.s4nchez.hackernews.di.DaggerAppComponent
+import ru.s4nchez.hackernews.di.NetModule
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
@@ -19,6 +20,7 @@ class App : Application() {
 
         dagger = DaggerAppComponent.builder()
                 .appModule(AppModule(this))
+                .netModule(NetModule())
                 .build()
 
         if (BuildConfig.DEBUG) {
