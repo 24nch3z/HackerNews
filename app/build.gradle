@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
@@ -16,17 +15,69 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 
+ext {
+    appcompat = '28.0.0-alpha1'
+    design = '28.0.0-alpha1'
+    retrofit = '2.4.0'
+    recycler = '28.0.0-alpha1'
+    dagger = '2.16'
+    moxy = '1.5.5'
+    rxjava = '2.1.16'
+    rxandroid = '2.0.2'
+    constraint = '1.1.3'
+    timber = '4.7.1'
+    adapterdelegates = '3.0.1'
+    interceptor = '3.10.0'
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation "com.android.support:appcompat-v7:$appcompat"
+    implementation "com.android.support.constraint:constraint-layout:$constraint"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    // Design
+    implementation "com.android.support:design:$design"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit"
+    implementation "com.squareup.okhttp3:logging-interceptor:$interceptor"
+
+    // RecyclerView
+    implementation "com.android.support:recyclerview-v7:$recycler"
+
+    // Dagger 2
+    kapt "com.google.dagger:dagger-compiler:$dagger"
+    kapt "com.google.dagger:dagger-android-processor:$dagger"
+    implementation "com.google.dagger:dagger:$dagger"
+    implementation "com.google.dagger:dagger-android:$dagger"
+    implementation "com.google.dagger:dagger-android-support:$dagger"
+
+    // Moxy
+    implementation "com.arello-mobile:moxy:$moxy"
+    implementation "com.arello-mobile:moxy-android:$moxy"
+    implementation "com.arello-mobile:moxy-app-compat:$moxy"
+    kapt "com.arello-mobile:moxy-compiler:$moxy"
+
+    // Rx
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
+
+    // Timber
+    implementation "com.jakewharton.timber:timber:$timber"
+
+    // AdapterDelegates
+    implementation "com.hannesdorfmann:adapterdelegates3:$adapterdelegates"
 }
