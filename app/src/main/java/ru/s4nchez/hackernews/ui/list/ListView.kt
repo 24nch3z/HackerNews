@@ -1,6 +1,7 @@
 package ru.s4nchez.hackernews.ui.list
 
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Toast
@@ -35,7 +36,14 @@ class ListView : BaseFragment(), ContractView, ListAdapter.OnItemClickListener {
             object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
-                    presenter.handleOnScrollListener(recyclerView.layoutManager!!)
+                    val manager = recyclerView.layoutManager ?: return
+
+                    with(manager as LinearLayoutManager) {
+                        val firstVisibleItemPos = findFirstVisibleItemPosition()
+                        if (childCount + firstVisibleItemPos >= itemCount && firstVisibleItemPos >= 0) {
+                            presenter.loadNextPage()
+                        }
+                    }
                 }
             }
 

@@ -1,8 +1,6 @@
 package ru.s4nchez.hackernews.ui.list
 
 import android.annotation.SuppressLint
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -83,22 +81,11 @@ class ListPresenter @Inject constructor(
                 })
     }
 
-    private fun loadNextPage() {
+    override fun loadNextPage() {
         if (isLoading) return
         val pageSize = Math.min(ids.size - items.size, PAGE_SIZE)
         var position = items.size
         val ids = Array(pageSize) { i -> ids[position++] }
         loadItemsByIds(ids)
-    }
-
-    override fun handleOnScrollListener(manager: RecyclerView.LayoutManager?) {
-        if (manager == null) return
-
-        with(manager as LinearLayoutManager) {
-            val firstVisibleItemPos = findFirstVisibleItemPosition()
-            if (childCount + firstVisibleItemPos >= itemCount && firstVisibleItemPos >= 0) {
-                loadNextPage()
-            }
-        }
     }
 }

@@ -1,11 +1,10 @@
 package ru.s4nchez.hackernews.ui.list
 
 import android.support.annotation.StringRes
-import android.support.v7.widget.RecyclerView
 import com.arellomobile.mvp.MvpView
 
 interface ContractPresenter {
-    fun handleOnScrollListener(manager: RecyclerView.LayoutManager?)
+    fun loadNextPage()
 }
 
 interface ContractView : MvpView {
