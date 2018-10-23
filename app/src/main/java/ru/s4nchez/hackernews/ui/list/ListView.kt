@@ -40,8 +40,15 @@ class ListView : BaseFragment(), ContractView, ListAdapter.OnItemClickListener {
             }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        App.dagger.inject(this)
+        val app: App = activity!!.application as App
+        app.plusNewsComponent().inject(this)
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        val app: App = activity!!.application as App
+        app.destroyNewsComponent()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

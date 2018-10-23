@@ -1,4 +1,4 @@
-package ru.s4nchez.hackernews.di
+package ru.s4nchez.hackernews.di.module
 
 import android.content.Context
 import dagger.Module
