@@ -84,7 +84,10 @@ class ListView : BaseFragment(), ContractView, ListAdapter.OnItemClickListener {
     override fun showToast(id: Int) = Toast.makeText(context!!, id, Toast.LENGTH_SHORT).show()
 
     override fun onItemClick(item: Item) {
-        if (item.url == null) showToast(R.string.no_link)
-        else openUrl(item.url)
+        if (item.url == null) {
+            showToast(R.string.no_link)
+        } else {
+            openUrl(item.url)
+        }
     }
 }
