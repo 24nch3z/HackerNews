@@ -68,12 +68,11 @@ class NewsView : BaseFragment(), ContractView, NewsAdapter.OnItemClickListener {
         }
     }
 
-    override fun initAdapter(items: ArrayList<Any>) {
-        adapter = NewsAdapter(this)
-        recycler_view.adapter = adapter
-    }
-
     override fun updateItems(items: ArrayList<Any>) {
+        if (adapter == null) {
+            adapter = NewsAdapter(this)
+            recycler_view.adapter = adapter
+        }
         adapter?.updateItems(items)
     }
 

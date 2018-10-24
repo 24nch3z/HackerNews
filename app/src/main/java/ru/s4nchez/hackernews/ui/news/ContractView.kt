@@ -4,7 +4,6 @@ import android.support.annotation.StringRes
 import com.arellomobile.mvp.MvpView
 
 interface ContractView : MvpView {
-    fun initAdapter(items: ArrayList<Any>)
     fun showHideProgressBar(flag: Boolean)
     fun showHideEmptyListView(flag: Boolean)
     fun updateItems(items: ArrayList<Any>)

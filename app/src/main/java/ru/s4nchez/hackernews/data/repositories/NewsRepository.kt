@@ -4,6 +4,6 @@ import io.reactivex.Single
 import ru.s4nchez.hackernews.data.entities.Item
 
 interface NewsRepository {
-    fun getNewStories(): Single<List<Int>>
-    fun getItem(id: Int): Single<Item>
+    fun getNewStories(): Single<Boolean>
+    fun loadNextPage(): Single<List<Item>>
 }
