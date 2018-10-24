@@ -1,4 +1,4 @@
-package ru.s4nchez.hackernews.ui.list
+package ru.s4nchez.hackernews.ui.news
 
 import android.support.v7.widget.RecyclerView
 import android.view.View

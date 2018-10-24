@@ -1,4 +1,4 @@
-package ru.s4nchez.hackernews.ui.list
+package ru.s4nchez.hackernews.ui.news
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -16,18 +16,18 @@ import ru.s4nchez.hackernews.utils.openUrl
 import ru.s4nchez.hackernews.utils.visibilityByFlag
 import javax.inject.Inject
 
-class ListView : BaseFragment(), ContractView, ListAdapter.OnItemClickListener {
+class NewsView : BaseFragment(), ContractView, NewsAdapter.OnItemClickListener {
 
     override val layout = R.layout.fragment_list
-    private var adapter: ListAdapter? = null
+    private var adapter: NewsAdapter? = null
 
     companion object {
-        fun newInstance() = ListView()
+        fun newInstance() = NewsView()
     }
 
     @Inject
     @InjectPresenter
-    lateinit var presenter: ListPresenter
+    lateinit var presenter: NewsPresenter
 
     @ProvidePresenter
     fun providePresenter() = presenter
@@ -69,7 +69,7 @@ class ListView : BaseFragment(), ContractView, ListAdapter.OnItemClickListener {
     }
 
     override fun initAdapter(items: ArrayList<Any>) {
-        adapter = ListAdapter(this)
+        adapter = NewsAdapter(this)
         recycler_view.adapter = adapter
     }
 

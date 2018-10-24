@@ -1,4 +1,4 @@
-package ru.s4nchez.hackernews.ui.list
+package ru.s4nchez.hackernews.ui.news
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
@@ -11,7 +11,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @InjectViewState
-class ListPresenter @Inject constructor(
+class NewsPresenter @Inject constructor(
         loadIdsInteractor: LoadIdsInteractor,
         private val getItemsInteractor: GetItemsInteractor
 ) : MvpPresenter<ContractView>(), ContractPresenter {

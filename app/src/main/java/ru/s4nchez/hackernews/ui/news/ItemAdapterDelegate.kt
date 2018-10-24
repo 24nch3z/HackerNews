@@ -1,4 +1,4 @@
-package ru.s4nchez.hackernews.ui.list
+package ru.s4nchez.hackernews.ui.news
 
 import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
@@ -12,7 +12,7 @@ import ru.s4nchez.hackernews.utils.inflate
 import java.text.SimpleDateFormat
 
 class ItemAdapterDelegate(
-        val listener: ListAdapter.OnItemClickListener
+        val listener: NewsAdapter.OnItemClickListener
 ) : AdapterDelegate<ArrayList<Any>>() {
 
     companion object {
@@ -31,7 +31,7 @@ class ItemAdapterDelegate(
 
     private inner class ViewHolder(
             itemView: View,
-            val listener: ListAdapter.OnItemClickListener
+            val listener: NewsAdapter.OnItemClickListener
     ) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: Item) {

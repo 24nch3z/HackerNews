@@ -1,4 +1,4 @@
-package ru.s4nchez.hackernews.ui.list
+package ru.s4nchez.hackernews.ui.news
 
 import android.support.annotation.StringRes
 import com.arellomobile.mvp.MvpView

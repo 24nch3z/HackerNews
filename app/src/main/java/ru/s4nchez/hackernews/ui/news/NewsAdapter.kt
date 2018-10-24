@@ -1,9 +1,9 @@
-package ru.s4nchez.hackernews.ui.list
+package ru.s4nchez.hackernews.ui.news
 
 import com.hannesdorfmann.adapterdelegates3.ListDelegationAdapter
 import ru.s4nchez.hackernews.data.entities.Item
 
-class ListAdapter(
+class NewsAdapter(
         val listener: OnItemClickListener
 ) : ListDelegationAdapter<ArrayList<Any>>() {
 
