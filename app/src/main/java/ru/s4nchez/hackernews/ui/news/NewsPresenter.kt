@@ -16,7 +16,6 @@ class NewsPresenter @Inject constructor(
         private val getItemsInteractor: GetItemsInteractor
 ) : MvpPresenter<ContractView>() {
 
-    private val PROGRESSBAR_ITEM_TAG = "PROGRESSBAR_ITEM_TAG"
     private val PAGE_SIZE = 10
     private val ids = ArrayList<Int>()
     private val items = ArrayList<Any>()
@@ -30,25 +29,13 @@ class NewsPresenter @Inject constructor(
         }
     }
 
-    private fun setProgressBarItem() {
-        if (!items.isEmpty()) {
-            items.add(PROGRESSBAR_ITEM_TAG)
-            viewState.updateItems(items)
-        }
-    }
-
-    private fun removeProgressBarItem() {
-        items.remove(PROGRESSBAR_ITEM_TAG)
-        viewState.updateItems(items)
-    }
-
     fun loadNextPage() {
         if (isLoading) return
         val pageSize = Math.min(ids.size - items.size, PAGE_SIZE)
         var position = items.size
         val ids = Array(pageSize) { i -> ids[position++] }
         isLoading = true
-        setProgressBarItem()
+        viewState.setListLoading(true)
         getItemsInteractor.execute(GetItemsObserver(), GetItemsInteractor.Params(ids))
     }
 
@@ -75,7 +62,7 @@ class NewsPresenter @Inject constructor(
             items.addAll(newItems)
             viewState.updateItems(items)
             viewState.showHideProgressBar(false)
-            removeProgressBarItem()
+            viewState.setListLoading(false)
         }
 
         override fun onError(e: Throwable) {
@@ -86,7 +73,7 @@ class NewsPresenter @Inject constructor(
             }
             viewState.showHideProgressBar(false)
             viewState.showToast(R.string.no_connection)
-            removeProgressBarItem()
+            viewState.setListLoading(false)
         }
     }
 }

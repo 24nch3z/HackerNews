@@ -9,4 +9,5 @@ interface ContractView : MvpView {
     fun showHideEmptyListView(flag: Boolean)
     fun updateItems(items: ArrayList<Any>)
     fun showToast(@StringRes id: Int)
+    fun setListLoading(flag: Boolean)
 }

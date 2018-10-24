@@ -83,6 +83,14 @@ class NewsView : BaseFragment(), ContractView, NewsAdapter.OnItemClickListener {
 
     override fun showToast(id: Int) = Toast.makeText(context!!, id, Toast.LENGTH_SHORT).show()
 
+    override fun setListLoading(flag: Boolean) {
+        if (flag) {
+            adapter?.setProgressBarItem()
+        } else {
+            adapter?.removeProgressBarItem()
+        }
+    }
+
     override fun onItemClick(item: Item) {
         if (item.url == null) {
             showToast(R.string.no_link)

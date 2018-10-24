@@ -4,8 +4,10 @@ import com.hannesdorfmann.adapterdelegates3.ListDelegationAdapter
 import ru.s4nchez.hackernews.data.entities.Item
 
 class NewsAdapter(
-        val listener: OnItemClickListener
+        listener: OnItemClickListener
 ) : ListDelegationAdapter<ArrayList<Any>>() {
+
+    private val PROGRESSBAR_ITEM_TAG = "PROGRESSBAR_ITEM_TAG"
 
     init {
         items = ArrayList()
@@ -18,6 +20,18 @@ class NewsAdapter(
         items.clear()
         items.addAll(newItems)
         notifyDataSetChanged()
+    }
+
+    fun setProgressBarItem() {
+        if (!items.isEmpty()) {
+            items.add(PROGRESSBAR_ITEM_TAG)
+            notifyItemInserted(items.size - 1)
+        }
+    }
+
+    fun removeProgressBarItem() {
+        items.remove(PROGRESSBAR_ITEM_TAG)
+        notifyItemRemoved(items.size - 1)
     }
 
     interface OnItemClickListener {
