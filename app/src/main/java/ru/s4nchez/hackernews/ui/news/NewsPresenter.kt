@@ -5,6 +5,7 @@ import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.observers.DisposableSingleObserver
 import ru.s4nchez.hackernews.R
 import ru.s4nchez.hackernews.data.entities.Item
+import ru.s4nchez.hackernews.interactors.EmptyParams
 import ru.s4nchez.hackernews.interactors.LoadIdsInteractor
 import ru.s4nchez.hackernews.interactors.LoadNextPageInteractor
 import timber.log.Timber
@@ -17,11 +18,12 @@ class NewsPresenter @Inject constructor(
 ) : MvpPresenter<ContractView>() {
 
     private var isLoading = false
+    private var isFirstPage = true
 
     init {
         if (!isLoading) {
             viewState.showHideProgressBar(true)
-            loadIdsInteractor.execute(LoadIdsObserver(), LoadIdsInteractor.Params())
+            loadIdsInteractor.execute(LoadIdsObserver(), EmptyParams())
         }
     }
 
@@ -29,7 +31,7 @@ class NewsPresenter @Inject constructor(
         if (isLoading) return
         isLoading = true
         viewState.setListLoading(true)
-        loadNextPageInteractor.execute(LoadNextPageObserver(), LoadNextPageInteractor.Params())
+        loadNextPageInteractor.execute(LoadNextPageObserver(), EmptyParams())
     }
 
     override fun onDestroy() {
@@ -41,6 +43,7 @@ class NewsPresenter @Inject constructor(
     private inner class LoadIdsObserver : DisposableSingleObserver<Boolean>() {
 
         override fun onSuccess(result: Boolean) {
+            viewState.showHideEmptyListView(false)
             if (result) loadNextPage()
         }
 
@@ -56,20 +59,23 @@ class NewsPresenter @Inject constructor(
     private inner class LoadNextPageObserver : DisposableSingleObserver<List<Item>>() {
 
         override fun onSuccess(newItems: List<Item>) {
-            isLoading = false
+            stopLoading()
+            isFirstPage = false
             viewState.updateItems(ArrayList(newItems))
-            viewState.showHideProgressBar(false)
-            viewState.setListLoading(false)
         }
 
         override fun onError(e: Throwable) {
             Timber.e(e)
+            if (isFirstPage) {
+                viewState.showHideEmptyListView(true)
+            }
+            stopLoading()
+//            viewState.showToast(R.string.no_connection)
+        }
+
+        private fun stopLoading() {
             isLoading = false
-//            if (items.isEmpty()) { // TODO
-//                viewState.showHideEmptyListView(true)
-//            }
             viewState.showHideProgressBar(false)
-            viewState.showToast(R.string.no_connection)
             viewState.setListLoading(false)
         }
     }

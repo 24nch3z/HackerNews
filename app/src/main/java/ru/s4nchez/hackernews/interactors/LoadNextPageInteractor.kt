@@ -6,9 +6,8 @@ import ru.s4nchez.hackernews.data.repositories.NewsRepository
 
 class LoadNextPageInteractor(
         private var repository: NewsRepository
-) : Interactor<List<Item>, LoadNextPageInteractor.Params>() {
+) : Interactor<List<Item>, EmptyParams>() {
 
-    override fun buildObservableInteractor(params: Params): Single<List<Item>> = repository.loadNextPage()
-
-    class Params
+    override fun buildObservableInteractor(params: EmptyParams): Single<List<Item>> =
+            repository.loadNextPage()
 }
