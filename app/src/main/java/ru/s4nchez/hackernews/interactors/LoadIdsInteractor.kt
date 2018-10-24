@@ -5,8 +5,10 @@ import ru.s4nchez.hackernews.data.repositories.NewsRepository
 
 class LoadIdsInteractor(
         private var repository: NewsRepository
-) : Interactor<List<Int>, Any>() {
+) : Interactor<List<Int>, LoadIdsInteractor.Params>() {
 
-    override fun buildObservableInteractor(params: Any): Single<List<Int>> =
+    override fun buildObservableInteractor(params: Params): Single<List<Int>> =
             repository.getNewStories()
+
+    class Params
 }

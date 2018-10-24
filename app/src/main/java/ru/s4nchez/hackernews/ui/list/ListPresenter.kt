@@ -26,7 +26,7 @@ class ListPresenter @Inject constructor(
         viewState.initAdapter(items)
         if (!isLoading && ids.isEmpty()) {
             viewState.showHideProgressBar(true)
-            loadIdsInteractor.execute(LoadIdsObserver(), 1)
+            loadIdsInteractor.execute(LoadIdsObserver(), LoadIdsInteractor.Params())
         }
     }
 
@@ -49,7 +49,7 @@ class ListPresenter @Inject constructor(
         val ids = Array(pageSize) { i -> ids[position++] }
         isLoading = true
         setProgressBarItem()
-        getItemsInteractor.execute(GetItemsObserver(), ids)
+        getItemsInteractor.execute(GetItemsObserver(), GetItemsInteractor.Params(ids))
     }
 
     private inner class LoadIdsObserver : DisposableSingleObserver<List<Int>>() {
