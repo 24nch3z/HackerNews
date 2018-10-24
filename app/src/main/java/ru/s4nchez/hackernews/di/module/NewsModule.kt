@@ -2,6 +2,7 @@ package ru.s4nchez.hackernews.di.module
 
 import dagger.Module
 import dagger.Provides
+import ru.s4nchez.hackernews.data.AppDatabase
 import ru.s4nchez.hackernews.data.datasource.APIInterface
 import ru.s4nchez.hackernews.data.repositories.NewsRepository
 import ru.s4nchez.hackernews.data.repositories.NewsRepositoryImpl
@@ -15,8 +16,8 @@ class NewsModule {
 
     @Provides
     @NewsScope
-    fun provideNewsRepository(apiInterface: APIInterface):
-            NewsRepository = NewsRepositoryImpl(apiInterface)
+    fun provideNewsRepository(apiInterface: APIInterface, db: AppDatabase):
+            NewsRepository = NewsRepositoryImpl(apiInterface, db)
 
     @Provides
     @NewsScope

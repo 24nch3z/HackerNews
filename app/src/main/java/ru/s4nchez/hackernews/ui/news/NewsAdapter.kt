@@ -1,7 +1,7 @@
 package ru.s4nchez.hackernews.ui.news
 
 import com.hannesdorfmann.adapterdelegates3.ListDelegationAdapter
-import ru.s4nchez.hackernews.data.entities.Item
+import ru.s4nchez.hackernews.data.entities.NewsItem
 
 class NewsAdapter(
         listener: OnItemClickListener
@@ -35,6 +35,6 @@ class NewsAdapter(
     }
 
     interface OnItemClickListener {
-        fun onItemClick(item: Item)
+        fun onItemClick(newsItem: NewsItem)
     }
 }

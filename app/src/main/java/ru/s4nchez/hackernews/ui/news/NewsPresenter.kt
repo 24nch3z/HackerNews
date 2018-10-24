@@ -4,7 +4,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.observers.DisposableSingleObserver
 import ru.s4nchez.hackernews.R
-import ru.s4nchez.hackernews.data.entities.Item
+import ru.s4nchez.hackernews.data.entities.NewsItem
 import ru.s4nchez.hackernews.interactors.EmptyParams
 import ru.s4nchez.hackernews.interactors.LoadIdsInteractor
 import ru.s4nchez.hackernews.interactors.LoadNextPageInteractor
@@ -56,9 +56,9 @@ class NewsPresenter @Inject constructor(
         }
     }
 
-    private inner class LoadNextPageObserver : DisposableSingleObserver<List<Item>>() {
+    private inner class LoadNextPageObserver : DisposableSingleObserver<List<NewsItem>>() {
 
-        override fun onSuccess(newItems: List<Item>) {
+        override fun onSuccess(newItems: List<NewsItem>) {
             stopLoading()
             isFirstPage = false
             viewState.updateItems(ArrayList(newItems))

@@ -10,7 +10,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import kotlinx.android.synthetic.main.fragment_list.*
 import ru.s4nchez.hackernews.App
 import ru.s4nchez.hackernews.R
-import ru.s4nchez.hackernews.data.entities.Item
+import ru.s4nchez.hackernews.data.entities.NewsItem
 import ru.s4nchez.hackernews.ui.common.BaseFragment
 import ru.s4nchez.hackernews.utils.openUrl
 import ru.s4nchez.hackernews.utils.visibilityByFlag
@@ -90,11 +90,11 @@ class NewsView : BaseFragment(), ContractView, NewsAdapter.OnItemClickListener {
         }
     }
 
-    override fun onItemClick(item: Item) {
-        if (item.url == null) {
+    override fun onItemClick(newsItem: NewsItem) {
+        if (newsItem.url == null) {
             showToast(R.string.no_link)
         } else {
-            openUrl(item.url)
+            openUrl(newsItem.url)
         }
     }
 }

@@ -35,6 +35,7 @@ ext {
     timber = '4.7.1'
     adapterdelegates = '3.0.1'
     interceptor = '3.10.0'
+    room = '1.1.1'
 }
 
 dependencies {
@@ -80,4 +81,9 @@ dependencies {
 
     // AdapterDelegates
     implementation "com.hannesdorfmann:adapterdelegates3:$adapterdelegates"
+
+    // Room
+    implementation "android.arch.persistence.room:runtime:$room"
+    kapt "android.arch.persistence.room:compiler:$room"
+    implementation "android.arch.persistence.room:rxjava2:$room"
 }
