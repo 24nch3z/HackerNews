@@ -14,7 +14,7 @@ import javax.inject.Inject
 class NewsPresenter @Inject constructor(
         loadIdsInteractor: LoadIdsInteractor,
         private val getItemsInteractor: GetItemsInteractor
-) : MvpPresenter<ContractView>(), ContractPresenter {
+) : MvpPresenter<ContractView>() {
 
     private val PROGRESSBAR_ITEM_TAG = "PROGRESSBAR_ITEM_TAG"
     private val PAGE_SIZE = 10
@@ -42,7 +42,7 @@ class NewsPresenter @Inject constructor(
         viewState.updateItems(items)
     }
 
-    override fun loadNextPage() {
+    fun loadNextPage() {
         if (isLoading) return
         val pageSize = Math.min(ids.size - items.size, PAGE_SIZE)
         var position = items.size

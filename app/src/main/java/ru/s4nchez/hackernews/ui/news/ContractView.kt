@@ -3,10 +3,6 @@ package ru.s4nchez.hackernews.ui.news
 import android.support.annotation.StringRes
 import com.arellomobile.mvp.MvpView
 
-interface ContractPresenter {
-    fun loadNextPage()
-}
-
 interface ContractView : MvpView {
     fun initAdapter(items: ArrayList<Any>)
     fun showHideProgressBar(flag: Boolean)
