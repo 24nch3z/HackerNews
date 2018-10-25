@@ -39,6 +39,24 @@ class NewsRepositoryImpl(
                 }
     }
 
+    override fun loadNextPage(offset: Int, count: Int): Single<List<NewsItem>> {
+//        val pageSize = Math.min(ids.size - items.size, PAGE_SIZE)
+//        var position = items.size
+//        val newIds = Array(pageSize) { _ -> ids[position++] }
+
+        val limit = offset + count
+        val newIds = ArrayList<Int>()
+        for (i in offset..limit) newIds.add(i)
+        val requests = newIds.map { getItem(it) }
+
+        return Single
+                .zip(requests) { it -> it.map { it as NewsItem } }
+                .flatMap {
+                    items.addAll(it)
+                    Single.just(items)
+                }
+    }
+
     // Умножение на 1000 нужно для перевода из секунд в миллисекунды
     private fun getItem(id: Int): Single<NewsItem> {
         val getFromNetwork = apiInterface.getItem(id)

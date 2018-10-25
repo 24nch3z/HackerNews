@@ -29,7 +29,7 @@ class ItemAdapterDelegate(
         (holder as ViewHolder).bind(items[pos] as NewsItem)
     }
 
-    private inner class ViewHolder(
+    inner class ViewHolder(
             itemView: View,
             val listener: NewsAdapter.OnItemClickListener
     ) : RecyclerView.ViewHolder(itemView) {

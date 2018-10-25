@@ -38,6 +38,7 @@ ext {
     room = '1.1.1'
     junit = '4.12'
     mockito = '2.19.0'
+    paging = '1.0.1'
 }
 
 dependencies {
@@ -91,4 +92,9 @@ dependencies {
     // Tests
     testImplementation "junit:junit:$junit"
     testImplementation "org.mockito:mockito-core:$mockito"
+
+    // Paging
+    implementation "android.arch.paging:common:$paging"
+    implementation "android.arch.paging:runtime:$paging"
+    implementation "android.arch.paging:rxjava2:$paging"
 }
