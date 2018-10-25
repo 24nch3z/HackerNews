@@ -5,9 +5,9 @@ import ru.s4nchez.hackernews.data.entities.NewsItem
 import ru.s4nchez.hackernews.data.repositories.NewsRepository
 
 class LoadNextPageInteractor(
-        private var repository: NewsRepository
-) : Interactor<List<NewsItem>, EmptyParams>() {
+        private val repository: NewsRepository
+) : Interactor<List<NewsItem>>() {
 
-    override fun buildObservableInteractor(params: EmptyParams): Single<List<NewsItem>> =
+    override fun buildObservableInteractor(): Single<List<NewsItem>> =
             repository.loadNextPage()
 }

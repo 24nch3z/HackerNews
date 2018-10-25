@@ -5,8 +5,6 @@ import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.observers.DisposableSingleObserver
 import ru.s4nchez.hackernews.R
 import ru.s4nchez.hackernews.data.entities.NewsItem
-import ru.s4nchez.hackernews.executor.JobExecutor
-import ru.s4nchez.hackernews.interactors.EmptyParams
 import ru.s4nchez.hackernews.interactors.LoadIdsInteractor
 import ru.s4nchez.hackernews.interactors.LoadNextPageInteractor
 import timber.log.Timber
@@ -15,8 +13,7 @@ import javax.inject.Inject
 @InjectViewState
 class NewsPresenter @Inject constructor(
         private val loadIdsInteractor: LoadIdsInteractor,
-        private val loadNextPageInteractor: LoadNextPageInteractor,
-        private val executor: JobExecutor
+        private val loadNextPageInteractor: LoadNextPageInteractor
 ) : MvpPresenter<ContractView>() {
 
     private var isLoading = false
@@ -25,7 +22,7 @@ class NewsPresenter @Inject constructor(
     init {
         if (!isLoading) {
             viewState.showHideProgressBar(true)
-            loadIdsInteractor.execute(LoadIdsObserver(), EmptyParams(), executor)
+            loadIdsInteractor.execute(LoadIdsObserver())
         }
     }
 
@@ -33,7 +30,7 @@ class NewsPresenter @Inject constructor(
         if (isLoading) return
         isLoading = true
         viewState.setListLoading(true)
-        loadNextPageInteractor.execute(LoadNextPageObserver(), EmptyParams(), executor)
+        loadNextPageInteractor.execute(LoadNextPageObserver())
     }
 
     override fun onDestroy() {

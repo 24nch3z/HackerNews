@@ -7,8 +7,8 @@ import ru.s4nchez.hackernews.data.datasource.APIInterface
 import ru.s4nchez.hackernews.data.entities.NewsItem
 
 class NewsRepositoryImpl(
-        private var apiInterface: APIInterface,
-        private var db: AppDatabase
+        private val apiInterface: APIInterface,
+        private val db: AppDatabase
 ) : NewsRepository {
 
     private val PAGE_SIZE = 10
