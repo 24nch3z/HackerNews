@@ -11,9 +11,7 @@ class NewsRepositoryImpl(
         private val db: AppDatabase
 ) : NewsRepository {
 
-    private val PAGE_SIZE = 10
     private val ids = ArrayList<Int>()
-    private val items = ArrayList<NewsItem>()
 
     override fun getNewStories(): Single<Boolean> {
         if (!ids.isEmpty()) return Single.just(false)
@@ -25,36 +23,12 @@ class NewsRepositoryImpl(
                 }
     }
 
-    override fun loadNextPage(): Single<List<NewsItem>> {
-        val pageSize = Math.min(ids.size - items.size, PAGE_SIZE)
-        var position = items.size
-        val newIds = Array(pageSize) { _ -> ids[position++] }
-        val requests = newIds.map { getItem(it) }
-
-        return Single
-                .zip(requests) { it -> it.map { it as NewsItem } }
-                .flatMap {
-                    items.addAll(it)
-                    Single.just(items)
-                }
-    }
-
     override fun loadNextPage(offset: Int, count: Int): Single<List<NewsItem>> {
-//        val pageSize = Math.min(ids.size - items.size, PAGE_SIZE)
-//        var position = items.size
-//        val newIds = Array(pageSize) { _ -> ids[position++] }
-
-        val limit = offset + count
+        val limit = offset + count - 1
         val newIds = ArrayList<Int>()
-        for (i in offset..limit) newIds.add(i)
+        for (i in offset..limit) newIds.add(ids[i])
         val requests = newIds.map { getItem(it) }
-
-        return Single
-                .zip(requests) { it -> it.map { it as NewsItem } }
-                .flatMap {
-                    items.addAll(it)
-                    Single.just(items)
-                }
+        return Single.zip(requests) { it -> it.map { it as NewsItem } }
     }
 
     // Умножение на 1000 нужно для перевода из секунд в миллисекунды

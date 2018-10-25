@@ -5,6 +5,5 @@ import ru.s4nchez.hackernews.data.entities.NewsItem
 
 interface NewsRepository {
     fun getNewStories(): Single<Boolean>
-    fun loadNextPage(): Single<List<NewsItem>>
     fun loadNextPage(offset: Int, count: Int): Single<List<NewsItem>>
 }

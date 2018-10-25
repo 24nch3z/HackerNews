@@ -3,12 +3,13 @@ package ru.s4nchez.hackernews.di.module
 import dagger.Module
 import dagger.Provides
 import ru.s4nchez.hackernews.data.AppDatabase
+import ru.s4nchez.hackernews.data.PagedNewsItemsDataSourceFactory
 import ru.s4nchez.hackernews.data.datasource.APIInterface
 import ru.s4nchez.hackernews.data.repositories.NewsRepository
 import ru.s4nchez.hackernews.data.repositories.NewsRepositoryImpl
 import ru.s4nchez.hackernews.di.NewsScope
 import ru.s4nchez.hackernews.interactors.LoadIdsInteractor
-import ru.s4nchez.hackernews.interactors.LoadNextPageInteractor
+import ru.s4nchez.hackernews.interactors.PagingLoadNextPageInteractor
 import ru.s4nchez.hackernews.ui.news.NewsPresenter
 
 @Module
@@ -22,8 +23,8 @@ class NewsModule {
     @Provides
     @NewsScope
     fun provideListPresenter(loadIdsInteractor: LoadIdsInteractor,
-                             loadNextPageInteractor: LoadNextPageInteractor):
-            NewsPresenter = NewsPresenter(loadIdsInteractor, loadNextPageInteractor)
+                             pagingLoadNextPageInteractor: PagingLoadNextPageInteractor):
+            NewsPresenter = NewsPresenter(loadIdsInteractor, pagingLoadNextPageInteractor)
 
     @Provides
     @NewsScope
@@ -32,7 +33,12 @@ class NewsModule {
 
     @Provides
     @NewsScope
-    fun provideLoadNextPageInteractor(repository: NewsRepository):
-            LoadNextPageInteractor = LoadNextPageInteractor(repository)
+    fun providePagedNewsItemsDataSourceFactory(repository: NewsRepository):
+            PagedNewsItemsDataSourceFactory = PagedNewsItemsDataSourceFactory(repository)
+
+    @Provides
+    @NewsScope
+    fun providePagingLoadNextPageInteractor(factory: PagedNewsItemsDataSourceFactory):
+            PagingLoadNextPageInteractor = PagingLoadNextPageInteractor(factory)
 
 }

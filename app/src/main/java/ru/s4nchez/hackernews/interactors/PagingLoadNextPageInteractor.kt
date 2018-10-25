@@ -12,8 +12,9 @@ class PagingLoadNextPageInteractor(
 
     private val config = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
-            .setInitialLoadSizeHint(10)
-            .setPageSize(10)
+            .setInitialLoadSizeHint(7)
+            .setPageSize(7)
+            .setPrefetchDistance(6)
             .build()
 
     override fun buildObservableInteractor(): Observable<PagedList<NewsItem>> {
