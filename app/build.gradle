@@ -36,6 +36,8 @@ ext {
     adapterdelegates = '3.0.1'
     interceptor = '3.10.0'
     room = '1.1.1'
+    junit = '4.12'
+    mockito = '2.19.0'
 }
 
 dependencies {
@@ -43,7 +45,6 @@ dependencies {
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.android.support:appcompat-v7:$appcompat"
     implementation "com.android.support.constraint:constraint-layout:$constraint"
-    testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
@@ -86,4 +87,8 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:$room"
     kapt "android.arch.persistence.room:compiler:$room"
     implementation "android.arch.persistence.room:rxjava2:$room"
+
+    // Tests
+    testImplementation "junit:junit:$junit"
+    testImplementation "org.mockito:mockito-core:$mockito"
 }
