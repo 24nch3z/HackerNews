@@ -15,7 +15,6 @@ class NewsRepositoryImpl(
 
     override fun getNewStories(): Single<Boolean> {
         if (!ids.isEmpty()) return Single.just(false)
-
         return apiInterface.getNewStories()
                 .flatMap {
                     ids.addAll(it)
@@ -24,7 +23,7 @@ class NewsRepositoryImpl(
     }
 
     override fun loadNextPage(offset: Int, count: Int): Single<List<NewsItem>> {
-        val limit = offset + count - 1
+        val limit = Math.min(offset + count - 1, ids.size - 1)
         val newIds = ArrayList<Int>()
         for (i in offset..limit) newIds.add(ids[i])
         val requests = newIds.map { getItem(it) }

@@ -24,7 +24,7 @@ class NetModule {
         val response = chain.proceed(chain.request())
 
         val cacheControl = CacheControl.Builder()
-                .maxAge(1, TimeUnit.MINUTES)
+                .maxAge(5, TimeUnit.MINUTES)
                 .build()
 
         response.newBuilder()
@@ -35,7 +35,7 @@ class NetModule {
 
     private fun getCache(context: Context): Cache {
         val cacheSize = 10 * 1024 * 1024
-        val httpCacheDirectory = File(context.getCacheDir(), "http-cache")
+        val httpCacheDirectory = File(context.cacheDir, "http-cache")
         return Cache(httpCacheDirectory, cacheSize.toLong())
     }
 

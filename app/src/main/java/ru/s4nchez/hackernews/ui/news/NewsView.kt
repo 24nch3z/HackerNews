@@ -15,7 +15,7 @@ import ru.s4nchez.hackernews.utils.openUrl
 import ru.s4nchez.hackernews.utils.visibilityByFlag
 import javax.inject.Inject
 
-class NewsView : BaseFragment(), ContractView, NewsAdapter.OnItemClickListener {
+class NewsView : BaseFragment(), ContractView, PagingAdapter.OnItemClickListener {
 
     override val layout = R.layout.fragment_list
     private var adapter: PagingAdapter? = null

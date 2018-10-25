@@ -18,7 +18,6 @@ class NewsPresenter @Inject constructor(
         private val pagingLoadNextPageInteractor: PagingLoadNextPageInteractor
 ) : MvpPresenter<ContractView>() {
 
-    private var isLoading = false
     private var isFirstPage = true
 
     fun loadIds() {
@@ -37,10 +36,17 @@ class NewsPresenter @Inject constructor(
 
         override fun onNext(t: PagedList<NewsItem>) {
             viewState.submitList(t)
+            isFirstPage = false
             viewState.showHideProgressBar(false)
         }
 
-        override fun onError(e: Throwable) {}
+        override fun onError(e: Throwable) {
+            Timber.e(e)
+            if (isFirstPage) {
+                viewState.showHideEmptyListView(true)
+            }
+            viewState.showHideProgressBar(false)
+        }
     }
 
     private inner class LoadIdsObserver : DisposableSingleObserver<Boolean>() {
@@ -54,34 +60,9 @@ class NewsPresenter @Inject constructor(
 
         override fun onError(e: Throwable) {
             Timber.e(e)
-            isLoading = false
             viewState.showHideEmptyListView(true)
             viewState.showHideProgressBar(false)
             viewState.showToast(R.string.no_connection)
         }
     }
-
-//    private inner class LoadNextPageObserver : DisposableSingleObserver<List<NewsItem>>() {
-//
-//        override fun onSuccess(newItems: List<NewsItem>) {
-//            stopLoading()
-//            isFirstPage = false
-//            viewState.updateItems(ArrayList(newItems))
-//        }
-//
-//        override fun onError(e: Throwable) {
-//            Timber.e(e)
-//            if (isFirstPage) {
-//                viewState.showHideEmptyListView(true)
-//            }
-//            stopLoading()
-////            viewState.showToast(R.string.no_connection)
-//        }
-//
-//        private fun stopLoading() {
-//            isLoading = false
-//            viewState.showHideProgressBar(false)
-//            viewState.setListLoading(false)
-//        }
-//    }
 }
