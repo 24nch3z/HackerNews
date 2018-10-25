@@ -19,11 +19,9 @@ class NewsPresenter @Inject constructor(
     private var isLoading = false
     private var isFirstPage = true
 
-    init {
-        if (!isLoading) {
-            viewState.showHideProgressBar(true)
-            loadIdsInteractor.execute(LoadIdsObserver())
-        }
+    fun loadIds() {
+        viewState.showHideProgressBar(true)
+        loadIdsInteractor.execute(LoadIdsObserver())
     }
 
     fun loadNextPage() {

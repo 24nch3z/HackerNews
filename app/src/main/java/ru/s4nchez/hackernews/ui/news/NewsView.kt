@@ -51,6 +51,9 @@ class NewsView : BaseFragment(), ContractView, NewsAdapter.OnItemClickListener {
         val app: App = activity!!.application as App
         app.componentManager.plusNewsComponent().inject(this)
         super.onCreate(savedInstanceState)
+        if (savedInstanceState == null) {
+            presenter.loadIds()
+        }
     }
 
     override fun onDestroy() {
