@@ -1,14 +1,10 @@
 package ru.s4nchez.hackernews.data.repositories
 
-import android.annotation.SuppressLint
-import io.reactivex.Maybe
+import io.reactivex.Completable
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import ru.s4nchez.hackernews.data.AppDatabase
 import ru.s4nchez.hackernews.data.datasource.APIInterface
 import ru.s4nchez.hackernews.data.entities.NewsItem
-import timber.log.Timber
 
 class NewsRepositoryImpl(
         private var apiInterface: APIInterface,
@@ -45,11 +41,15 @@ class NewsRepositoryImpl(
 
     // Умножение на 1000 нужно для перевода из секунд в миллисекунды
     private fun getItem(id: Int): Single<NewsItem> {
-        return apiInterface.getItem(id)
+        val getFromNetwork = apiInterface.getItem(id)
                 .flatMap {
                     if (it.time != null) it.time = it.time!! * 1000
-                    db.newsItemDao().insert(it)
                     Single.just(it)
                 }
+                .flatMapCompletable { Completable.fromAction { db.newsItemDao().insert(it) } }
+                .andThen(db.newsItemDao().getById(id))
+
+        return db.newsItemDao().getById(id)
+                .onErrorResumeNext(getFromNetwork)
     }
 }

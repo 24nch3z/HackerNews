@@ -20,7 +20,7 @@ import javax.inject.Singleton
 @Module
 class NetModule {
 
-    val networkCacheInterceptor = Interceptor { chain ->
+    private val networkCacheInterceptor = Interceptor { chain ->
         val response = chain.proceed(chain.request())
 
         val cacheControl = CacheControl.Builder()

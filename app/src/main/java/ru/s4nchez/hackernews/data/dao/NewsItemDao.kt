@@ -1,7 +1,6 @@
 package ru.s4nchez.hackernews.data.dao
 
 import android.arch.persistence.room.*
-import io.reactivex.Maybe
 import io.reactivex.Single
 import ru.s4nchez.hackernews.data.entities.NewsItem
 
@@ -12,7 +11,7 @@ interface NewsItemDao {
     fun getById(id: Int): Single<NewsItem>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(item: NewsItem): Single<Long>
+    fun insert(item: NewsItem): Long
 
     @Update
     fun update(item: NewsItem)
