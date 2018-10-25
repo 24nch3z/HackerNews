@@ -7,6 +7,7 @@ import ru.s4nchez.hackernews.data.datasource.APIInterface
 import ru.s4nchez.hackernews.data.repositories.NewsRepository
 import ru.s4nchez.hackernews.data.repositories.NewsRepositoryImpl
 import ru.s4nchez.hackernews.di.NewsScope
+import ru.s4nchez.hackernews.executor.JobExecutor
 import ru.s4nchez.hackernews.interactors.LoadIdsInteractor
 import ru.s4nchez.hackernews.interactors.LoadNextPageInteractor
 import ru.s4nchez.hackernews.ui.news.NewsPresenter
@@ -21,8 +22,9 @@ class NewsModule {
 
     @Provides
     @NewsScope
-    fun provideListPresenter(loadIdsInteractor: LoadIdsInteractor, loadNextPageInteractor: LoadNextPageInteractor):
-            NewsPresenter = NewsPresenter(loadIdsInteractor, loadNextPageInteractor)
+    fun provideListPresenter(loadIdsInteractor: LoadIdsInteractor,
+                             loadNextPageInteractor: LoadNextPageInteractor, executor: JobExecutor):
+            NewsPresenter = NewsPresenter(loadIdsInteractor, loadNextPageInteractor, executor)
 
     @Provides
     @NewsScope

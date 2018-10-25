@@ -1,9 +1,14 @@
 package ru.s4nchez.hackernews.data.repositories
 
+import android.annotation.SuppressLint
+import io.reactivex.Maybe
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import ru.s4nchez.hackernews.data.AppDatabase
 import ru.s4nchez.hackernews.data.datasource.APIInterface
 import ru.s4nchez.hackernews.data.entities.NewsItem
+import timber.log.Timber
 
 class NewsRepositoryImpl(
         private var apiInterface: APIInterface,
@@ -42,8 +47,8 @@ class NewsRepositoryImpl(
     private fun getItem(id: Int): Single<NewsItem> {
         return apiInterface.getItem(id)
                 .flatMap {
-                    db.newsItemDao().insert(it)
                     if (it.time != null) it.time = it.time!! * 1000
+                    db.newsItemDao().insert(it)
                     Single.just(it)
                 }
     }

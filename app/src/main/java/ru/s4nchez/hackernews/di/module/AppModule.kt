@@ -5,6 +5,7 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import ru.s4nchez.hackernews.data.AppDatabase
+import ru.s4nchez.hackernews.executor.JobExecutor
 import javax.inject.Singleton
 
 @Module
@@ -20,4 +21,8 @@ class AppModule(private val context: Context) {
             Room.databaseBuilder(context, AppDatabase::class.java, "database")
 //                    .allowMainThreadQueries()
                     .build()
+
+    @Provides
+    @Singleton
+    fun provideJobExecutor(): JobExecutor = JobExecutor()
 }
