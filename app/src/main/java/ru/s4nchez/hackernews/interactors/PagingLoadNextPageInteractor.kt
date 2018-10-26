@@ -12,8 +12,8 @@ class PagingLoadNextPageInteractor(
 
     private val config = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
-            .setInitialLoadSizeHint(10)
-            .setPageSize(10)
+            .setInitialLoadSizeHint(50)
+            .setPageSize(20)
             .setPrefetchDistance(5)
             .build()
 

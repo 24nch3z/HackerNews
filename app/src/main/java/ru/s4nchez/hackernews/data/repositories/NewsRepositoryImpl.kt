@@ -28,15 +28,13 @@ class NewsRepositoryImpl(
         for (i in offset..limit) newIds.add(ids[i])
         val requests = newIds.map { getItem(it) }
         return Single.zip(requests) { it -> it.map { it as NewsItem } }
+                .onErrorResumeNext { Single.just(ArrayList()) }
     }
 
     // Умножение на 1000 нужно для перевода из секунд в миллисекунды
     private fun getItem(id: Int): Single<NewsItem> {
         val getFromNetwork = apiInterface.getItem(id)
-                .flatMap {
-                    if (it.time != null) it.time = it.time!! * 1000
-                    Single.just(it)
-                }
+                .map { it.time = it.time!! * 1000; it }
                 .flatMapCompletable { Completable.fromAction { db.newsItemDao().insert(it) } }
                 .andThen(db.newsItemDao().getById(id))
 
